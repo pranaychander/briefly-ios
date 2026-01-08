@@ -29,9 +29,22 @@
 		9D1027D92EEF09DA009A7068 /* BrieflyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrieflyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9DECC71D2F0FE6A60015E94E /* Exceptions for "Briefly" folder in "BrieflyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/Networking/Transport/HTTPTransport.swift,
+			);
+			target = 9D1027CE2EEF09DA009A7068 /* BrieflyTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D1027BF2EEF09DA009A7068 /* Briefly */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9DECC71D2F0FE6A60015E94E /* Exceptions for "Briefly" folder in "BrieflyTests" target */,
+			);
 			path = Briefly;
 			sourceTree = "<group>";
 		};
@@ -78,6 +91,7 @@
 				9D1027BF2EEF09DA009A7068 /* Briefly */,
 				9D1027D22EEF09DA009A7068 /* BrieflyTests */,
 				9D1027DC2EEF09DA009A7068 /* BrieflyUITests */,
+				9D5417812EF81C7D0012374C /* Frameworks */,
 				9D1027BE2EEF09DA009A7068 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +104,13 @@
 				9D1027D92EEF09DA009A7068 /* BrieflyUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9D5417812EF81C7D0012374C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +216,8 @@
 			);
 			mainGroup = 9D1027B42EEF09DA009A7068;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9D1027BE2EEF09DA009A7068 /* Products */;
 			projectDirPath = "";
