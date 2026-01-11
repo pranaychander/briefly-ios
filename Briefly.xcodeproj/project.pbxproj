@@ -27,7 +27,6 @@
 		9D1027BD2EEF09DA009A7068 /* Briefly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Briefly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1027CF2EEF09DA009A7068 /* BrieflyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrieflyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D1027D92EEF09DA009A7068 /* BrieflyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrieflyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9DECC73C2F13D89B0015E94E /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -102,7 +101,6 @@
 				9D1027DC2EEF09DA009A7068 /* BrieflyUITests */,
 				9D5417812EF81C7D0012374C /* Frameworks */,
 				9D1027BE2EEF09DA009A7068 /* Products */,
-				9DECC73C2F13D89B0015E94E /* Debug.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -422,7 +420,6 @@
 		};
 		9D1027E42EEF09DA009A7068 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9DECC73C2F13D89B0015E94E /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
