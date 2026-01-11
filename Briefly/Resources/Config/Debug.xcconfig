@@ -10,5 +10,5 @@
 
 HN_BASE_URL=hacker-news.firebaseio.com/v0
 REDDIT_BASE_URL=www.reddit.com
-RSS_TECH_FEED=feeds.bbci.co.uk/news/technology/rss.xml
+RSS_TECH_FEED=feeds.bbci.co.uk/
 APP_ENV = debug

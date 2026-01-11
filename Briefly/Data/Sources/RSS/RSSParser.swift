@@ -15,11 +15,18 @@ final class RSSParser: NSObject {
     private var buffer = ""
 
     func parse(data: Data) -> [RSSItemDTO] {
+        items = []
+        currentItem = nil
+        currentElement = ""
+        buffer = ""
+
         let parser = XMLParser(data: data)
         parser.delegate = self
         parser.parse()
+
         return items
     }
+
 }
 
 private final class RSSItemDTOBuilder {

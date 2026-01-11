@@ -10,8 +10,6 @@ import Foundation
 // Core/AppConfig.swift
 struct AppConfig {
     static let hackerNewsBaseURL: URL = {
-        print("CONFIG:", Bundle.main.object(forInfoDictionaryKey: "APP_ENV") ?? "nil")
-
         guard let urlString = Bundle.main.object(forInfoDictionaryKey: "HN_BASE_URL") as? String,
               let url = URL(string: "https://\(urlString)") else {
             fatalError("HN_BASE_URL not configured")
@@ -27,7 +25,7 @@ struct AppConfig {
         return url
     }()
 
-    static let rssTechFeed: URL = {
+    static let rssBaseURL: URL = {
         guard let urlString = Bundle.main.object(forInfoDictionaryKey: "RSS_TECH_FEED") as? String,
               let url = URL(string: "https://\(urlString)") else {
             fatalError("RSS_TECH_FEED not configured")
