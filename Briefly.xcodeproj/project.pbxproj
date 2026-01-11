@@ -420,6 +420,8 @@
 		};
 		9D1027E42EEF09DA009A7068 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 9D1027BF2EEF09DA009A7068 /* Briefly */;
+			baseConfigurationReferenceRelativePath = Resources/Config/Debug.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

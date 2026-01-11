@@ -8,7 +8,7 @@
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
 
-HN_BASE_URL=https://hacker-news.firebaseio.com/v0
-REDDIT_BASE_URL=https://www.reddit.com
-RSS_TECH_FEED=https://feeds.bbci.co.uk/news/technology/rss.xml
+HN_BASE_URL=hacker-news.firebaseio.com/v0
+REDDIT_BASE_URL=www.reddit.com
+RSS_TECH_FEED=feeds.bbci.co.uk/news/technology/rss.xml
 APP_ENV = staging
