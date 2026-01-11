@@ -23,7 +23,7 @@ enum HackerNewsEndpoint: APIEndpoint {
     }
 
     var baseURL: URL {
-        URL(string: "https://hacker-news.firebaseio.com/v0")!
+        AppConfig.hackerNewsBaseURL
     }
 
     var path: String {

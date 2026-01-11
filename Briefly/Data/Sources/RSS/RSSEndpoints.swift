@@ -23,7 +23,7 @@ enum RSSEndpoint: APIEndpoint {
     var baseURL: URL {
         switch self {
         case .feed(.technology):
-            return URL(string: "https://feeds.bbci.co.uk")!
+            return AppConfig.redditBaseURL
         case .feed(.custom(let url)):
             return url.deletingLastPathComponent()
         }

@@ -1,0 +1,14 @@
+//
+//  Release.xcconfig
+//  Briefly
+//
+//  Created by Pranay Chander on 08/01/26.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+HN_BASE_URL=https://staging-hn.firebaseio.com/v0
+REDDIT_BASE_URL=https://staging.reddit.com
+RSS_TECH_FEED=https://feeds.bbci.co.uk/news/technology/rss.xml
+APP_ENV = release

@@ -24,7 +24,7 @@ enum RedditEndpoint: APIEndpoint {
     }
 
     var baseURL: URL {
-        URL(string: "https://www.reddit.com")!
+        AppConfig.redditBaseURL
     }
 
     var path: String {

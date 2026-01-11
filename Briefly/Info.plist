@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>HN_BASE_URL</key>
+	<string>$(HN_BASE_URL)</string>
+	<key>REDDIT_BASE_URL</key>
+	<string>$(REDDIT_BASE_URL)</string>
+	<key>RSS_TECH_FEED</key>
+	<string>$(RSS_TECH_FEED)</string>
+	<key>APP_ENV</key>
+	<string>$(APP_ENV)</string>
+</dict>
+</plist>
