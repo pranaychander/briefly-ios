@@ -25,11 +25,11 @@ final class RedditSource: ArticleSource {
         self.strategy = strategy
     }
 
-    func fetchArticles(limit: Int) async throws -> [Article] {
-
+    func fetchArticles(topic: Topic, limit: Int) async throws -> [Article] {
+        let subreddit = topic.toRedditSubreddit()
         let endpoint = RedditEndpoint.posts(
             .top(
-                subreddit: "technology",
+                subreddit: subreddit,
                 limit: limit,
                 timeRange: .day
             )

@@ -9,5 +9,5 @@ import Foundation
 
 protocol ArticleSource {
     var source: ContentSource { get }
-    func fetchArticles(limit: Int) async throws -> [Article]
+    func fetchArticles(topic: Topic, limit: Int) async throws -> [Article]
 }

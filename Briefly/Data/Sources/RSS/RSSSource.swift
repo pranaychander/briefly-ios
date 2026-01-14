@@ -25,10 +25,10 @@ final class RSSSource: ArticleSource {
         self.mapper = mapper
     }
 
-    func fetchArticles(limit: Int) async throws -> [Article] {
+    func fetchArticles(topic: Topic, limit: Int) async throws -> [Article] {
 
         let data = try await apiClient.requestData(
-            RSSEndpoint.feed(.technology)
+            RSSEndpoint.feed(topic: topic)
         )
 
         let items = parser.parse(data: data)

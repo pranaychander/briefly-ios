@@ -17,6 +17,8 @@ struct BrieflyApp: App {
         WindowGroup {
             FeedView(
                 viewModel: FeedViewModel(
+                    getTopics: container.getSelectedTopicsUseCase,
+                    saveTopics: container.saveSelectedTopicsUseCase,
                     aggregateUseCase: container.aggregateArticlesUseCase
                 )
             )

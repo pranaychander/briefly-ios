@@ -9,32 +9,28 @@ import Foundation
 
 enum RSSEndpoint: APIEndpoint {
 
-    case feed(FeedType)
+    case feed(topic: Topic)
+    case custom(URL)
 
-    enum FeedType {
-        case technology
-        case custom(URL)
-    }
-    
     var method: HTTPMethod {
         .get
     }
 
     var baseURL: URL {
         switch self {
-        case .feed(.technology):
+        case .feed:
             return AppConfig.rssBaseURL
-        case .feed(.custom(let url)):
+        case .custom(let url):
             return url.deletingLastPathComponent()
         }
     }
 
     var path: String {
         switch self {
-        case .feed(.technology):
-            return "/news/technology/rss.xml"
-        case .feed(.custom(let url)):
-            return url.lastPathComponent
+        case .feed(let topic):
+            return topic.rssPath
+        case .custom(let url):
+            return "/" + url.lastPathComponent
         }
     }
 
@@ -42,4 +38,5 @@ enum RSSEndpoint: APIEndpoint {
         []
     }
 }
+
 

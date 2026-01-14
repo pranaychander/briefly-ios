@@ -22,7 +22,10 @@ final class HackerNewsSource: ArticleSource {
         self.mapper = mapper
     }
 
-    func fetchArticles(limit: Int) async throws -> [Article] {
+    func fetchArticles(topic: Topic, limit: Int) async throws -> [Article] {
+        guard topic == .technology else {
+            return []
+        }
         let ids: [Int] = try await apiClient.request(HackerNewsEndpoint.stories(.top))
         let selected = Array(ids.prefix(limit))
         return try await fetchStories(ids: selected)

@@ -12,34 +12,45 @@ struct ArticleRowView: View {
     let article: Article
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 8) {
 
-            HStack {
-                Text(article.source.rawValue.uppercased())
-                    .font(.caption2)
-                    .padding(4)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(4)
-
+            // Source + time
+            HStack(spacing: 8) {
+                sourceBadge
                 Spacer()
-
-                Text("▲ \(article.score)")
+                Text(article.publishedAt.relativeDescription)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
 
+            // Title
             Text(article.title)
                 .font(.headline)
+                .foregroundColor(.primary)
                 .lineLimit(3)
 
-            HStack {
-                Text(article.author)
-                Text("•")
-                Text(article.publishedAt, style: .relative)
+            // Optional subtitle / description
+            if !article.subtitleText.isEmpty {
+                Text(article.subtitleText)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+
             }
-            .font(.caption)
-            .foregroundColor(.secondary)
         }
         .padding(.vertical, 8)
+    }
+}
+
+private extension ArticleRowView {
+
+    var sourceBadge: some View {
+        Text(article.source.displayName)
+            .font(.caption2)
+            .fontWeight(.semibold)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(article.source.color.opacity(0.15))
+            .foregroundColor(article.source.color)
+            .clipShape(Capsule())
     }
 }

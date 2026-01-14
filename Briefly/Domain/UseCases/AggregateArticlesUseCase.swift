@@ -8,9 +8,8 @@
 import Foundation
 
 protocol AggregateArticlesUseCase {
-    func execute(limitPerSource: Int) async throws -> [Article]
+    func execute(topics: Set<Topic>, limitPerTopic: Int) async throws -> [Article]
 }
-
 
 final class DefaultAggregateArticlesUseCase: AggregateArticlesUseCase {
 
@@ -20,17 +19,17 @@ final class DefaultAggregateArticlesUseCase: AggregateArticlesUseCase {
         self.sources = sources
     }
 
-    func execute(limitPerSource: Int) async throws -> [Article] {
+    func execute(topics: Set<Topic>, limitPerTopic: Int) async throws -> [Article] {
         try await withThrowingTaskGroup(of: [Article].self) { group in
-
-            for source in sources {
-                group.addTask {
-                    try await source.fetchArticles(limit: limitPerSource)
+            for topic in topics {
+                for source in sources {
+                    group.addTask {
+                        try await source.fetchArticles(topic: topic, limit: limitPerTopic)
+                    }
                 }
             }
-
             var combined: [Article] = []
-
+            
             for try await articles in group {
                 combined.append(contentsOf: articles)
             }
