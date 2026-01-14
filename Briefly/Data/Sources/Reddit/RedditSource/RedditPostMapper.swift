@@ -21,7 +21,8 @@ struct DefaultRedditPostMapper: RedditPostMapper {
             author: dto.author,
             publishedAt: Date(timeIntervalSince1970: dto.created_utc),
             score: dto.score,
-            source: .reddit
+            source: .reddit,
+            thumbnailURL: nil
         )
     }
 }

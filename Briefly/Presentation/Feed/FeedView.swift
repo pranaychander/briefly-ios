@@ -10,14 +10,22 @@ import SwiftUI
 struct FeedView: View {
     
     @StateObject var viewModel: FeedViewModel
+    @State private var searchText: String = ""
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                // MARK: - Topic Picker
                 TopicPickerView(
                     topics: Topic.allCases,
                     selection: $viewModel.selectedTopics
                 )
+                .padding(.vertical, 8)
+                
+                // MARK: - Search Field
+                searchBar
+                
+                // MARK: - Content
                 ZStack {
                     content
                     if viewModel.isLoading {
@@ -32,6 +40,18 @@ struct FeedView: View {
         }
     }
     
+    // MARK: - Search Bar
+    private var searchBar: some View {
+        TextField("Search articles...", text: $searchText)
+            .textFieldStyle(.roundedBorder)
+            .padding(.horizontal)
+            .onChange(of: searchText) { newValue in
+                // Filter articles in ViewModel
+                viewModel.filterArticles(query: newValue)
+            }
+    }
+    
+    // MARK: - Content Selector
     @ViewBuilder
     private var content: some View {
         if let error = viewModel.errorMessage {
@@ -43,11 +63,15 @@ struct FeedView: View {
         }
     }
 }
+
+// MARK: - Subviews
 extension FeedView {
+    
     private var listView: some View {
         List(viewModel.articles) { article in
             ArticleRowView(article: article)
                 .listRowSeparator(.hidden)
+                .padding(.vertical, 4)
         }
         .listStyle(.plain)
         .animation(.default, value: viewModel.articles)

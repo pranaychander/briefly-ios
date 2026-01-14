@@ -44,7 +44,7 @@ extension Topic {
         case .sports:
             return "/sport/rss.xml"
         case .entertainment:
-            return "/news/entertainment/rss.xml"
+            return "/news/entertainment_and_arts/rss.xml"
         }
     }
 }

@@ -25,7 +25,8 @@ struct HackerNewsMapper {
             author: author,
             publishedAt: Date(timeIntervalSince1970: time),
             score: score,
-            source: .hackerNews
+            source: .hackerNews,
+            thumbnailURL: nil
         )
     }
 }

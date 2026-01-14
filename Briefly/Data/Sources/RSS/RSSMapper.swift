@@ -17,7 +17,8 @@ struct RSSMapper {
             author: dto.author ?? "Unknown",
             publishedAt: dto.publishedDate ?? Date(),
             score: 0, // RSS doesn’t have score, optional later
-            source: .rss
+            source: .rss,
+            thumbnailURL: nil,
         )
     }
 }
