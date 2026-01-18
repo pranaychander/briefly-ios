@@ -8,17 +8,44 @@
 import Foundation
 
 final class DependencyContainer {
-    
+
+    // MARK: - Networking
+
     let apiClient = DefaultAPIClient()
-    
+
     lazy var hnSource = HackerNewsSource(apiClient: apiClient)
     lazy var redditSource = RedditSource(apiClient: apiClient)
     lazy var rssSource = RSSSource(apiClient: apiClient)
+
+    // MARK: - User Settings (Preferences)
+
+    private lazy var userSettingsRepository: UserSettingsRepository = {
+        UserSettingsLocalRepository()
+    }()
+
+    lazy var userSettingsStore: UserSettingsStore = {
+        let initialState = userSettingsRepository.load()
+        return UserSettingsStore(
+            initialState: initialState,
+            repository: userSettingsRepository
+        )
+    }()
+
+    // MARK: - Use Cases
+
+    lazy var aggregateArticlesUseCase: AggregateArticlesUseCase = {
+        DefaultAggregateArticlesUseCase(
+            sources: [hnSource, redditSource, rssSource]
+        )
+    }()
     
-    // UseCases
-    private let topicPreferenceSource = TopicPreferenceLocalSource()
-    lazy var getSelectedTopicsUseCase = GetSelectedTopicsUseCase(repository: topicPreferenceSource)
-    lazy var saveSelectedTopicsUseCase = SaveSelectedTopicsUseCase(repository: topicPreferenceSource)
-    
-    lazy var aggregateArticlesUseCase = DefaultAggregateArticlesUseCase(sources: [hnSource, redditSource, rssSource])
+    // MARK: - ViewModels
+
+        // lazy property for HomeViewModel
+        lazy var homeViewModel: HomeViewModel = {
+            HomeViewModel(
+                settingsStore: userSettingsStore,
+                aggregateUseCase: aggregateArticlesUseCase
+            )
+        }()
 }

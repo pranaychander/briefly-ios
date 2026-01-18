@@ -41,9 +41,7 @@ private extension HackerNewsSource {
 
             for id in ids {
                 group.addTask {
-                    let dto: HNItemDTO = try await self.apiClient.request(
-                        HackerNewsEndpoint.item(id: id)
-                    )
+                    let dto: HNItemDTO = try await self.apiClient.request(HackerNewsEndpoint.item(id: id))
                     return self.mapper.map(dto)
                 }
             }

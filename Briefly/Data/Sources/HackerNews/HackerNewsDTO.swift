@@ -15,4 +15,5 @@ struct HNItemDTO: Decodable {
     let by: String?
     let time: TimeInterval?
     let score: Int?
+    let topic: String
 }

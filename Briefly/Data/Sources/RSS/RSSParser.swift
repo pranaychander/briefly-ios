@@ -13,12 +13,15 @@ final class RSSParser: NSObject {
     private var currentItem: RSSItemDTOBuilder?
     private var currentElement = ""
     private var buffer = ""
+    
+    private var currentTopic = ""
 
-    func parse(data: Data) -> [RSSItemDTO] {
+    func parse(data: Data, topic: String) -> [RSSItemDTO] {
         items = []
         currentItem = nil
         currentElement = ""
         buffer = ""
+        currentTopic = topic
 
         let parser = XMLParser(data: data)
         parser.delegate = self
@@ -87,7 +90,8 @@ extension RSSParser: XMLParserDelegate {
                     link: item.link,
                     author: item.author,
                     publishedDate: item.publishedDate,
-                    description: item.description
+                    description: item.description,
+                    topic: currentTopic
                 )
             )
             currentItem = nil

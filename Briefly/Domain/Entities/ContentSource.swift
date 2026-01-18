@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum ContentSource: String {
+enum ContentSource: String, Codable {
     case hackerNews
     case reddit
     case rss

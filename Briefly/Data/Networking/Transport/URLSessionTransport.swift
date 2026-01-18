@@ -17,7 +17,7 @@ final class URLSessionTransport: HTTPTransport {
 
     func send(_ request: URLRequest) async throws -> Data {
         let (data, response) = try await session.data(for: request)
-
+        print(response)
         guard let httpResponse = response as? HTTPURLResponse,
               200..<300 ~= httpResponse.statusCode else {
             throw URLError(.badServerResponse)

@@ -15,6 +15,7 @@ struct Article: Identifiable, Equatable, Hashable {
     let publishedAt: Date
     var score: Int
     let source: ContentSource
+    let topic: Topic
     let thumbnailURL: URL?
 }
 

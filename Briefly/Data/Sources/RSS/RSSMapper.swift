@@ -18,6 +18,7 @@ struct RSSMapper {
             publishedAt: dto.publishedDate ?? Date(),
             score: 0, // RSS doesn’t have score, optional later
             source: .rss,
+            topic: Topic(rawValue: dto.topic) ?? .business,
             thumbnailURL: nil,
         )
     }

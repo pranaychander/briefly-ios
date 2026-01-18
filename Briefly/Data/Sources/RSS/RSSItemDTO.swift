@@ -13,5 +13,6 @@ struct RSSItemDTO {
     let author: String?
     let publishedDate: Date?
     let description: String?
+    var topic: String
 }
 

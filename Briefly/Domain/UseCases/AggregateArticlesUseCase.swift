@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 
 protocol AggregateArticlesUseCase {
     func execute(topics: Set<Topic>, limitPerTopic: Int) async throws -> [Article]
@@ -19,18 +20,31 @@ final class DefaultAggregateArticlesUseCase: AggregateArticlesUseCase {
         self.sources = sources
     }
 
-    func execute(topics: Set<Topic>, limitPerTopic: Int) async throws -> [Article] {
-        try await withThrowingTaskGroup(of: [Article].self) { group in
+    func execute(topics: Set<Topic>, limitPerTopic: Int) async -> [Article] {
+
+        await withTaskGroup(of: [Article].self) { group in
+
             for topic in topics {
                 for source in sources {
                     group.addTask {
-                        try await source.fetchArticles(topic: topic, limit: limitPerTopic)
+                        do {
+                            return try await source.fetchArticles(
+                                topic: topic,
+                                limit: limitPerTopic
+                            )
+                        } catch {
+                            Logger.feed.error(
+                                "Fetch failed | source=\(source.source.rawValue) topic=\(topic.rawValue) error=\(error.localizedDescription)"
+                            )
+                            return []
+                        }
                     }
                 }
             }
+
             var combined: [Article] = []
-            
-            for try await articles in group {
+
+            for await articles in group {
                 combined.append(contentsOf: articles)
             }
 

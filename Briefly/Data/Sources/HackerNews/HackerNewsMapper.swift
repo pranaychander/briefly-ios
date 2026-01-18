@@ -26,6 +26,7 @@ struct HackerNewsMapper {
             publishedAt: Date(timeIntervalSince1970: time),
             score: score,
             source: .hackerNews,
+            topic: Topic(rawValue: dto.topic) ?? .business,
             thumbnailURL: nil
         )
     }

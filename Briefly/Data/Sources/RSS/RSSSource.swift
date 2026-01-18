@@ -31,7 +31,7 @@ final class RSSSource: ArticleSource {
             RSSEndpoint.feed(topic: topic)
         )
 
-        let items = parser.parse(data: data)
+        let items = parser.parse(data: data, topic: topic.rawValue)
 
         return items
             .prefix(limit)

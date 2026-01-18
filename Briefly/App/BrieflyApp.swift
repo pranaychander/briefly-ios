@@ -15,13 +15,8 @@ struct BrieflyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            FeedView(
-                viewModel: FeedViewModel(
-                    getTopics: container.getSelectedTopicsUseCase,
-                    saveTopics: container.saveSelectedTopicsUseCase,
-                    aggregateUseCase: container.aggregateArticlesUseCase
-                )
-            )
+            BrieflyMainTabView(container: container)
+                .environmentObject(container.userSettingsStore)
         }
     }
 }

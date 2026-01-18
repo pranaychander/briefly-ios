@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Topic: String, CaseIterable, Identifiable, Hashable {
+enum Topic: String, CaseIterable, Identifiable, Hashable, Codable {
     case technology
     case business
     case sports
