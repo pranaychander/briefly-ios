@@ -38,6 +38,7 @@ private final class RSSItemDTOBuilder {
     var publishedDate: Date?
     var author: String?
     var description: String = ""
+    var thumbnailURL: URL?
 }
 
 
@@ -55,6 +56,26 @@ extension RSSParser: XMLParserDelegate {
 
         if elementName == "item" {
             currentItem = RSSItemDTOBuilder()
+            return
+        }
+
+        guard let item = currentItem else { return }
+
+        // ✅ BBC media:content (preferred – larger image)
+        if elementName == "media:content",
+           item.thumbnailURL == nil,
+           attributeDict["medium"] == "image",
+           let urlString = attributeDict["url"],
+           let url = URL(string: urlString) {
+            item.thumbnailURL = url
+        }
+
+        // ✅ BBC media:thumbnail (fallback – smaller)
+        if elementName == "media:thumbnail",
+           item.thumbnailURL == nil,
+           let urlString = attributeDict["url"],
+           let url = URL(string: urlString) {
+            item.thumbnailURL = url
         }
     }
 
@@ -91,7 +112,8 @@ extension RSSParser: XMLParserDelegate {
                     author: item.author,
                     publishedDate: item.publishedDate,
                     description: item.description,
-                    topic: currentTopic
+                    topic: currentTopic,
+                    thumbnailURL:  item.thumbnailURL
                 )
             )
             currentItem = nil

@@ -13,11 +13,23 @@ struct ArticleCardView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
+            AsyncImage(url: article.thumbnailURL) { phase in
+                switch phase {
+                case .empty:
+                    ShimmerView()
 
-            AsyncImage(url: article.thumbnailURL) { image in
-                image.resizable().scaledToFill()
-            } placeholder: {
-                Color.gray.opacity(0.3)
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .transition(.opacity)
+
+                case .failure:
+                    CategoryImagePlaceholder(topic: article.topic)
+
+                @unknown default:
+                    CategoryImagePlaceholder(topic: article.topic)
+                }
             }
             .frame(width: 80, height: 80)
             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -49,4 +61,3 @@ struct ArticleCardView: View {
         }
     }
 }
-

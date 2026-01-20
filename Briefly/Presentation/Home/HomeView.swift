@@ -60,4 +60,3 @@ struct HomeView: View {
             .background(.ultraThinMaterial)
     }
 }
-

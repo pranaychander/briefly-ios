@@ -22,9 +22,8 @@ struct DefaultRedditPostMapper: RedditPostMapper {
             publishedAt: Date(timeIntervalSince1970: dto.created_utc),
             score: dto.score,
             source: .reddit,
-            topic: Topic(rawValue: dto.topic) ?? .business,
-            thumbnailURL: nil
+            topic: Topic(rawValue: dto.topic ?? "") ?? .business,
+            thumbnailURL: dto.thumbnail?.redditSanitizedURL
         )
     }
 }
-

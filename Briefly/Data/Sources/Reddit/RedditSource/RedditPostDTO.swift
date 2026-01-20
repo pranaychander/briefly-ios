@@ -26,5 +26,6 @@ struct RedditPostDTO: Decodable {
     let author: String
     let created_utc: TimeInterval
     let score: Int
-    let topic: String
+    let topic: String?
+    let thumbnail: String?
 }

@@ -14,5 +14,6 @@ struct RSSItemDTO {
     let publishedDate: Date?
     let description: String?
     var topic: String
+    let thumbnailURL: URL?
 }
 

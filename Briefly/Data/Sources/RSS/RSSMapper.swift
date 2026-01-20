@@ -19,7 +19,7 @@ struct RSSMapper {
             score: 0, // RSS doesn’t have score, optional later
             source: .rss,
             topic: Topic(rawValue: dto.topic) ?? .business,
-            thumbnailURL: nil,
+            thumbnailURL: dto.thumbnailURL,
         )
     }
 }
