@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
 
     @StateObject var viewModel: HomeViewModel
+    @State private var hasLoadedData = false
 
     var body: some View {
         ScrollView {
@@ -32,16 +33,24 @@ struct HomeView: View {
                 // ARTICLES
                 LazyVStack(spacing: 12) {
                     ForEach(viewModel.articles.dropFirst()) { article in
-                        ArticleCardView(article: article)
-                            .padding(.horizontal)
+                        NavigationLink(value: article) {
+                            ArticleCardView(article: article)
+                                .padding(.horizontal)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
         }
         .navigationTitle("Briefly")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: Article.self) { article in
+            ArticleDetailView(viewModel: viewModel.makeDetailViewModel(for: article))
+        }
         .task {
+            guard !hasLoadedData else { return }
             await viewModel.load()
+            hasLoadedData = true
         }
         .onChange(of: viewModel.selectedType) {
             Task { await viewModel.load() }

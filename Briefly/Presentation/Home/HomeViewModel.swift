@@ -13,6 +13,9 @@ final class HomeViewModel: ObservableObject {
 
     @Published private(set) var articles: [Article] = []
     @Published private(set) var allArticles: [Article] = []
+    private let redditSource: RedditSource
+    private let hnSource: HackerNewsSource
+    private let rssSource: RSSSource
     @Published var isLoading = false
     @Published var errorMessage: String?
 
@@ -24,10 +27,16 @@ final class HomeViewModel: ObservableObject {
 
     init(
         settingsStore: UserSettingsStore,
-        aggregateUseCase: AggregateArticlesUseCase
+        aggregateUseCase: AggregateArticlesUseCase,
+        redditSource: RedditSource,
+        hnSource: HackerNewsSource,
+        rssSource: RSSSource
     ) {
         self.settingsStore = settingsStore
         self.aggregateArticlesUseCase = aggregateUseCase
+        self.redditSource = redditSource
+        self.hnSource = hnSource
+        self.rssSource = rssSource
         observeTopics()
     }
     
@@ -78,5 +87,18 @@ final class HomeViewModel: ObservableObject {
             $0.title.lowercased().contains(q)
             || $0.author.lowercased().contains(q)
         }
+    }
+    
+    func makeDetailViewModel(for article: Article) -> ArticleDetailViewModel {
+        let source: ArticleSource
+        switch article.source {
+        case .reddit:
+            source = redditSource
+        case .hackerNews:
+            source = hnSource
+        case .rss:
+            source = rssSource
+        }
+        return ArticleDetailViewModel(article: article, source: source)
     }
 }

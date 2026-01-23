@@ -10,6 +10,7 @@ import Foundation
 enum RedditEndpoint: APIEndpoint {
 
     case posts(PostCategory)
+    case comments(postId: String, limit: Int)
 
     enum PostCategory {
         case top(
@@ -31,6 +32,8 @@ enum RedditEndpoint: APIEndpoint {
         switch self {
         case .posts(.top(let subreddit, _, _)):
             return "/r/\(subreddit)/top.json"
+        case .comments(postId: let postId, _):
+            return "/comments/\(postId).json"
         }
     }
 
@@ -41,6 +44,8 @@ enum RedditEndpoint: APIEndpoint {
                 .init(name: "limit", value: "\(limit)"),
                 .init(name: "t", value: timeRange.rawValue)
             ]
+        case .comments(_ , limit: let limit):
+            return [ .init(name: "limit", value: "\(limit)")]
         }
     }
 }

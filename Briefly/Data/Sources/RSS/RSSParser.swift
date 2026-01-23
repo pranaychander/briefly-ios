@@ -39,6 +39,7 @@ private final class RSSItemDTOBuilder {
     var author: String?
     var description: String = ""
     var thumbnailURL: URL?
+    var contentEncoded: String?
 }
 
 
@@ -102,16 +103,19 @@ extension RSSParser: XMLParserDelegate {
             item.publishedDate = RSSDateParser.parse(value)
         case "dc:creator", "author":
             item.author = value
-        case "description", "content:encoded":
+        case "description":
             item.description = value
+        case "content:encoded":
+            item.contentEncoded = value
         case "item":
+            let rawContent = item.contentEncoded ?? item.description
             items.append(
                 RSSItemDTO(
                     title: item.title,
                     link: item.link,
                     author: item.author,
                     publishedDate: item.publishedDate,
-                    description: item.description,
+                    description: rawContent,
                     topic: currentTopic,
                     thumbnailURL:  item.thumbnailURL
                 )

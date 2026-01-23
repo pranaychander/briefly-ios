@@ -12,10 +12,12 @@ struct BrieflyMainTabView: View {
     
     var body: some View {
         TabView {
-            HomeView(viewModel: container.homeViewModel)
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
-                }
+            NavigationStack {
+                HomeView(viewModel: container.homeViewModel)
+            }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
             
             DiscoverView()
                 .tabItem {

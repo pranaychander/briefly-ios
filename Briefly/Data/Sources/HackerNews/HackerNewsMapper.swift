@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct HackerNewsMapper {
+protocol HackerNewsMapper {
+    func map(_ dto: HNItemDTO) -> Article?
+}
+
+struct DefaultHackerNewsMapper: HackerNewsMapper {
 
     func map(_ dto: HNItemDTO) -> Article? {
         guard dto.type == "story",
@@ -26,8 +30,9 @@ struct HackerNewsMapper {
             publishedAt: Date(timeIntervalSince1970: time),
             score: score,
             source: .hackerNews,
-            topic: Topic(rawValue: dto.topic) ?? .business,
-            thumbnailURL: nil
+            topic: Topic(rawValue: dto.topic ?? "") ?? .business,
+            thumbnailURL: nil,
+            contentPreview: nil
         )
     }
 }

@@ -16,4 +16,3 @@ struct RSSItemDTO {
     var topic: String
     let thumbnailURL: URL?
 }
-

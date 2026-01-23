@@ -13,13 +13,15 @@ final class HackerNewsSource: ArticleSource {
 
     private let apiClient: APIClient
     private let mapper: HackerNewsMapper
-
+    private let commentMapper: HackerNewsCommentMapper
     init(
         apiClient: APIClient,
-        mapper: HackerNewsMapper = HackerNewsMapper()
+        mapper: HackerNewsMapper = DefaultHackerNewsMapper(),
+        commentMapper: HackerNewsCommentMapper = DefaultHackerNewsCommentMapper()
     ) {
         self.apiClient = apiClient
         self.mapper = mapper
+        self.commentMapper = commentMapper
     }
 
     func fetchArticles(topic: Topic, limit: Int) async throws -> [Article] {
@@ -42,7 +44,9 @@ private extension HackerNewsSource {
             for id in ids {
                 group.addTask {
                     let dto: HNItemDTO = try await self.apiClient.request(HackerNewsEndpoint.item(id: id))
-                    return self.mapper.map(dto)
+                    var article = self.mapper.map(dto)
+                    article?.topic = .technology
+                    return article
                 }
             }
 
@@ -55,6 +59,43 @@ private extension HackerNewsSource {
             }
 
             return articles
+        }
+    }
+}
+
+extension HackerNewsSource {
+
+    func fetchComments(for articleId: String, limit: Int) async throws -> [Comment] {
+
+        guard let storyId = Int(articleId) else {
+            return []
+        }
+
+        let story: HNItemDTO = try await apiClient.request(HackerNewsEndpoint.item(id: storyId))
+
+        guard let kids = story.kids, !kids.isEmpty else {
+            return []
+        }
+
+        let selected = Array(kids.prefix(limit))
+
+        return try await withThrowingTaskGroup(of: Comment?.self) { group in
+
+            for id in selected {
+                group.addTask {
+                    let dto: HNItemDTO = try await self.apiClient.request(HackerNewsEndpoint.item(id: id))
+                    return self.commentMapper.map(dto)
+                }
+            }
+
+            var comments: [Comment] = []
+
+            for try await comment in group {
+                if let comment {
+                    comments.append(comment)
+                }
+            }
+            return comments
         }
     }
 }

@@ -38,5 +38,3 @@ enum RSSEndpoint: APIEndpoint {
         []
     }
 }
-
-

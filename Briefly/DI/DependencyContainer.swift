@@ -45,7 +45,10 @@ final class DependencyContainer {
         lazy var homeViewModel: HomeViewModel = {
             HomeViewModel(
                 settingsStore: userSettingsStore,
-                aggregateUseCase: aggregateArticlesUseCase
+                aggregateUseCase: aggregateArticlesUseCase,
+                redditSource: redditSource,
+                hnSource: hnSource,
+                rssSource: rssSource
             )
         }()
 }
