@@ -15,4 +15,3 @@ enum TimeRange: String {
     case year = "year"
     case all = "all"
 }
-

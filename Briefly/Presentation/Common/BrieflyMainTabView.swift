@@ -29,7 +29,7 @@ struct BrieflyMainTabView: View {
                     Label("Saved", systemImage: "bookmark.fill")
                 }
             
-            ProfileView()
+            ProfileView(viewModel: container.profileViewModel)
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }

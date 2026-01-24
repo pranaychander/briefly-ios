@@ -9,34 +9,30 @@ import Foundation
 import Combine
 
 @MainActor
-final class HomeViewModel: ObservableObject {
+@Observable
+final class HomeViewModel {
 
-    @Published private(set) var articles: [Article] = []
-    @Published private(set) var allArticles: [Article] = []
-    private let redditSource: RedditSource
-    private let hnSource: HackerNewsSource
-    private let rssSource: RSSSource
-    @Published var isLoading = false
-    @Published var errorMessage: String?
+    private(set) var articles: [Article] = []
+    private(set) var allArticles: [Article] = []
+    var isLoading = false
+    var errorMessage: String?
 
-    @Published var selectedType: HomeFeedType = .forYou
+    var selectedType: HomeFeedType = .forYou
 
     private let aggregateArticlesUseCase: AggregateArticlesUseCase
     private let settingsStore: UserSettingsStore
+    private let detailFactory: ArticleDetailViewModelFactory
+    
     private var cancellables = Set<AnyCancellable>()
 
     init(
         settingsStore: UserSettingsStore,
         aggregateUseCase: AggregateArticlesUseCase,
-        redditSource: RedditSource,
-        hnSource: HackerNewsSource,
-        rssSource: RSSSource
+        detailsFactory: ArticleDetailViewModelFactory
     ) {
         self.settingsStore = settingsStore
         self.aggregateArticlesUseCase = aggregateUseCase
-        self.redditSource = redditSource
-        self.hnSource = hnSource
-        self.rssSource = rssSource
+        self.detailFactory = detailsFactory
         observeTopics()
     }
     
@@ -90,15 +86,6 @@ final class HomeViewModel: ObservableObject {
     }
     
     func makeDetailViewModel(for article: Article) -> ArticleDetailViewModel {
-        let source: ArticleSource
-        switch article.source {
-        case .reddit:
-            source = redditSource
-        case .hackerNews:
-            source = hnSource
-        case .rss:
-            source = rssSource
-        }
-        return ArticleDetailViewModel(article: article, source: source)
+        detailFactory.make(article: article)
     }
 }

@@ -12,14 +12,12 @@ struct AIResultView: View {
     let article: Article
     let action: AIAction
     
-    @StateObject private var viewModel: AIResultViewModel
+    @State private var viewModel: AIResultViewModel
     
     init(article: Article, action: AIAction) {
         self.article = article
         self.action = action
-        _viewModel = StateObject(
-            wrappedValue: AIResultViewModel(article: article, action: action)
-        )
+        _viewModel = .init(wrappedValue: AIResultViewModel(article: article, action: action))
     }
     
     var body: some View {

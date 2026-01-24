@@ -10,7 +10,7 @@ import WebKit
 
 struct ArticleDetailView: View {
 
-    @StateObject var viewModel: ArticleDetailViewModel
+    @State var viewModel: ArticleDetailViewModel
     
     var body: some View {
         ScrollView {
@@ -101,7 +101,7 @@ struct ArticleDetailView: View {
             AIResultView(article: viewModel.article, action: action)
         }
         .task {
-            await viewModel.loadComments()
+            await viewModel.loadPreview()
         }
     }
     

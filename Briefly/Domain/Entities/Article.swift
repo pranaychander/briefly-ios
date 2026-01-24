@@ -17,7 +17,7 @@ struct Article: Identifiable, Equatable, Hashable {
     let source: ContentSource
     var topic: Topic
     let thumbnailURL: URL?
-    let contentPreview: String?
+    var contentPreview: String?
 }
 
 extension Article {
@@ -40,3 +40,19 @@ extension Article {
     }
 }
 
+extension Article {
+    func withUpdatedPreview(_ preview: String) -> Article {
+        Article(
+            id: id,
+            title: title,
+            url: url,
+            author: author,
+            publishedAt: publishedAt,
+            score: score,
+            source: source,
+            topic: topic,
+            thumbnailURL: thumbnailURL,
+            contentPreview: preview
+        )
+    }
+}

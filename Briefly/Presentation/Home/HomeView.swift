@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
 
-    @StateObject var viewModel: HomeViewModel
+    @State var viewModel: HomeViewModel
     @State private var hasLoadedData = false
 
     var body: some View {

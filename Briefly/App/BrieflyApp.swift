@@ -10,13 +10,11 @@ import CoreData
 
 @main
 struct BrieflyApp: App {
-
     private let container = DependencyContainer()
-
+    
     var body: some Scene {
         WindowGroup {
             BrieflyMainTabView(container: container)
-                .environmentObject(container.userSettingsStore)
         }
     }
 }

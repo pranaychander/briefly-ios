@@ -8,10 +8,11 @@
 import Foundation
 import Combine
 
-final class AIResultViewModel: ObservableObject {
+@Observable
+final class AIResultViewModel {
 
-    @Published var output: String = ""
-    @Published var isLoading: Bool = false
+    var output: String = ""
+    var isLoading: Bool = false
 
     private let article: Article
     private let action: AIAction

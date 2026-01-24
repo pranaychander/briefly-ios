@@ -15,10 +15,7 @@ final class UserSettingsStore: ObservableObject {
 
     private let repository: UserSettingsRepository
 
-    init(
-        initialState: UserSettings,
-        repository: UserSettingsRepository
-    ) {
+    init(initialState: UserSettings, repository: UserSettingsRepository) {
         self.state = initialState
         self.repository = repository
     }
