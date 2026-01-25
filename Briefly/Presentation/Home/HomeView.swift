@@ -18,7 +18,9 @@ struct HomeView: View {
         ScrollView {
             VStack(spacing: 0) {
                 if let hero = viewModel.articles.first {
-                    HeroArticleView(article: hero)
+                    NavigationLink(value: hero) {
+                        HeroArticleView(article: hero)
+                    }
                 }
                 
                 HomeFeedPickerView(
