@@ -9,30 +9,34 @@ import SwiftUI
 
 struct BrieflyMainTabView: View {
     let container: DependencyContainer
-    
+    @State private var navigationState = AppNavigationState()
+
     var body: some View {
-        TabView {
-            NavigationStack {
-                HomeView(viewModel: container.homeViewModel)
+        TabView(selection: $navigationState.selectedTab) {
+            
+           Tab(BrieflyTab.home.title, systemImage: BrieflyTab.home.icon, value: .home) {
+                NavigationStack {
+                    HomeView(viewModel: container.homeViewModel)
+                }
             }
-            .tabItem {
-                Label("Home", systemImage: "house.fill")
+
+            Tab(BrieflyTab.discover.title, systemImage: BrieflyTab.discover.icon, value: .discover, role: .search) {
+                DiscoverView()
+                    .toolbarRole(.browser)
+            }
+
+            Tab(BrieflyTab.saved.title, systemImage: BrieflyTab.saved.icon, value: .saved) {
+                SavedView()
             }
             
-            DiscoverView()
-                .tabItem {
-                    Label("Discover", systemImage: "magnifyingglass")
-                }
-            
-            SavedView()
-                .tabItem {
-                    Label("Saved", systemImage: "bookmark.fill")
-                }
-            
-            ProfileView(viewModel: container.profileViewModel)
-                .tabItem {
-                    Label("Profile", systemImage: "person.fill")
-                }
+            Tab(BrieflyTab.market.title, systemImage: BrieflyTab.market.icon, value: .market) {
+                MarketView()
+            }
+
+            Tab(BrieflyTab.profile.title, systemImage: BrieflyTab.profile.icon, value: .profile) {
+                ProfileView(viewModel: container.profileViewModel)
+            }
         }
+        .environment(navigationState)
     }
 }

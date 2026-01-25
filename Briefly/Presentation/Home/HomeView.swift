@@ -8,30 +8,24 @@
 import SwiftUI
 
 struct HomeView: View {
-
+    
     @State var viewModel: HomeViewModel
     @State private var hasLoadedData = false
     @Environment(UserSettingsStore.self) private var userSettings
-
+    @Environment(AppNavigationState.self) private var nav
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                
-                // TOP BAR
-                TopBarView()
-                    .padding(.bottom, 10)
-                // HERO
                 if let hero = viewModel.articles.first {
                     HeroArticleView(article: hero)
                 }
-
-                // TOPICS
+                
                 HomeFeedPickerView(
                     selection: $viewModel.selectedType
                 )
                 .padding(.vertical, 12)
-
-                // ARTICLES
+                
                 LazyVStack(spacing: 12) {
                     ForEach(viewModel.articles.dropFirst()) { article in
                         NavigationLink(value: article) {
@@ -45,6 +39,15 @@ struct HomeView: View {
         }
         .navigationTitle("Briefly")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    nav.selectedTab = .profile
+                } label: {
+                    Image(systemName: BrieflyTab.profile.icon)
+                }
+            }
+        }
         .navigationDestination(for: Article.self) { article in
             ArticleDetailView(viewModel: viewModel.makeDetailViewModel(for: article))
         }
@@ -56,7 +59,7 @@ struct HomeView: View {
         .onChange(of: viewModel.selectedType) {
             Task { await viewModel.load() }
         }
-        .onChange(of: userSettings.state, { oldValue, newValue in
+        .onChange(of: userSettings.state, { _, _ in
             Task { await viewModel.load() }
         })
         .overlay {
@@ -65,7 +68,7 @@ struct HomeView: View {
             }
         }
     }
-
+    
     private var loaderOverlay: some View {
         ProgressView()
             .scaleEffect(1.3)
