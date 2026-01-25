@@ -9,9 +9,10 @@ import Foundation
 import Combine
 
 @MainActor
+@Observable
 final class UserSettingsStore: ObservableObject {
 
-    @Published var state: UserSettings
+    var state: UserSettings
 
     private let repository: UserSettingsRepository
 
@@ -55,20 +56,20 @@ final class UserSettingsStore: ObservableObject {
 
     // MARK: - Behavior
 
-    func setOfflineMode(_ enabled: Bool) {
-        state.offlineModeEnabled = enabled
+    func toggleOfflineMode() {
+        state.offlineModeEnabled.toggle()
         persist()
     }
 
-    func setAutoRefresh(_ enabled: Bool) {
-        state.autoRefreshEnabled = enabled
+    func toggleAutoRefresh() {
+        state.autoRefreshEnabled.toggle()
         persist()
     }
 
     // MARK: - Notifications
 
-    func setNotificationsEnabled(_ enabled: Bool) {
-        state.notificationsEnabled = enabled
+    func toggleNotificationsEnabled() {
+        state.notificationsEnabled.toggle()
         persist()
     }
 
@@ -83,4 +84,3 @@ final class UserSettingsStore: ObservableObject {
         repository.save(state)
     }
 }
-

@@ -48,6 +48,11 @@ final class DependencyContainer {
         )
     }()
     
+    // MARK: - Providers
+    lazy var topicProvider: TopicPreferencesProvider = {
+        userSettingsStore
+    }()
+    
     // MARK: - Use Cases
     
     lazy var aggregateArticlesUseCase: AggregateArticlesUseCase = {
@@ -65,7 +70,7 @@ final class DependencyContainer {
     // lazy property for HomeViewModel
     lazy var homeViewModel: HomeViewModel = {
         HomeViewModel(
-            settingsStore: userSettingsStore,
+            topicProvider: topicProvider,
             aggregateUseCase: aggregateArticlesUseCase,
             detailsFactory: articleDetailFactory
         )
@@ -73,6 +78,6 @@ final class DependencyContainer {
     
     // lazy property for ProfileViewModel
     lazy var profileViewModel: ProfileViewModel = {
-        ProfileViewModel(userSettingsStore: userSettingsStore)
+        ProfileViewModel()
     }()
 }

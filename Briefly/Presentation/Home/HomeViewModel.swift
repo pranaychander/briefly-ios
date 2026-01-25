@@ -20,36 +20,26 @@ final class HomeViewModel {
     var selectedType: HomeFeedType = .forYou
 
     private let aggregateArticlesUseCase: AggregateArticlesUseCase
-    private let settingsStore: UserSettingsStore
+    private let topicProvider: TopicPreferencesProvider
     private let detailFactory: ArticleDetailViewModelFactory
     
     private var cancellables = Set<AnyCancellable>()
 
     init(
-        settingsStore: UserSettingsStore,
+        topicProvider: TopicPreferencesProvider,
         aggregateUseCase: AggregateArticlesUseCase,
         detailsFactory: ArticleDetailViewModelFactory
     ) {
-        self.settingsStore = settingsStore
+        self.topicProvider = topicProvider
         self.aggregateArticlesUseCase = aggregateUseCase
         self.detailFactory = detailsFactory
-        observeTopics()
     }
     
-    private func observeTopics() {
-        settingsStore.$state
-            .map(\.selectedTopics)
-            .removeDuplicates()
-            .sink { [weak self] topics in
-                Task { await self?.load() }
-            }
-            .store(in: &cancellables)
-    }
 
     private var filteredTopics: Set<Topic> {
         switch selectedType {
         case .forYou:
-            return settingsStore.state.selectedTopics
+            return topicProvider.selectedTopics
         case .topic(let topic):
             return [topic]
         }

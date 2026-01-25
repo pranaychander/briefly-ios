@@ -11,6 +11,7 @@ struct HomeView: View {
 
     @State var viewModel: HomeViewModel
     @State private var hasLoadedData = false
+    @Environment(UserSettingsStore.self) private var userSettings
 
     var body: some View {
         ScrollView {
@@ -55,6 +56,9 @@ struct HomeView: View {
         .onChange(of: viewModel.selectedType) {
             Task { await viewModel.load() }
         }
+        .onChange(of: userSettings.state, { oldValue, newValue in
+            Task { await viewModel.load() }
+        })
         .overlay {
             if viewModel.isLoading {
                 loaderOverlay

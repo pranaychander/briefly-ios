@@ -15,6 +15,7 @@ struct BrieflyApp: App {
     var body: some Scene {
         WindowGroup {
             BrieflyMainTabView(container: container)
+                .environment(container.userSettingsStore)
         }
     }
 }

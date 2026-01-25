@@ -9,27 +9,34 @@ import SwiftUI
 
 struct ProfileView: View {
 
-    @State var viewModel: ProfileViewModel
+    @Environment(UserSettingsStore.self) private var userSettings
+
+    let viewModel: ProfileViewModel
 
     var body: some View {
         List {
             ForEach(viewModel.sections) { section in
                 switch section {
+
                 case .header:
                     ProfileHeaderView()
 
                 case .topics:
                     TopicsSectionView(
-                        selectedTopics: viewModel.selectedTopics,
-                        onToggle: viewModel.toggleTopic
+                        selectedTopics: userSettings.state.selectedTopics,
+                        onToggle: userSettings.toggleTopic
                     )
 
                 case .contentPreferences:
                     ContentPreferencesSectionView(
-                        isAutoRefreshEnabled: viewModel.isAutoRefreshEnabled,
-                        isOfflineModeEnabled: viewModel.isOfflineModeEnabled,
-                        onAutoRefreshToggle: viewModel.setAutoRefresh,
-                        onOfflineModeToggle: viewModel.setOfflineMode
+                        isAutoRefreshEnabled: userSettings.state.autoRefreshEnabled,
+                        isOfflineModeEnabled: userSettings.state.offlineModeEnabled,
+                        onAutoRefreshToggle: { _ in
+                            userSettings.toggleAutoRefresh()
+                        },
+                        onOfflineModeToggle: { _ in
+                            userSettings.toggleOfflineMode()
+                        }
                     )
 
                 case .appSettings:
