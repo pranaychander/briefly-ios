@@ -20,6 +20,7 @@ struct ArticleMetaView: View {
             Text(article.source.displayName)
             Spacer()
         }
+        .padding(.horizontal)
         .font(.caption)
         .foregroundColor(.secondary)
     }

@@ -6,70 +6,39 @@
 //
 
 import SwiftUI
-import WebKit
 
 struct ArticleDetailView: View {
-
     @State var viewModel: ArticleDetailViewModel
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 
-                // HERO IMAGE
+                // Hero
                 if let url = viewModel.article.thumbnailURL {
-                    DetailHeroImage(url: url)
+                    ArticleHeroView(url: url)
                 }
                 
-                // TITLE
-                Text(viewModel.article.title)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding(.horizontal)
+                ArticleTitleView(title: viewModel.article.title)
                 
-                // META
                 ArticleMetaView(article: viewModel.article)
-                    .padding(.horizontal)
                 
-                // TOPIC + SCORE
                 ArticleSignalsView(article: viewModel.article)
-                    .padding(.horizontal)
                 
                 if let content = viewModel.article.contentPreview, !content.isEmpty {
-                    Text(content)
-                        .font(.body)
-                        .foregroundColor(.primary)
-                        .lineSpacing(6)
-                        .padding(.horizontal)
-                        .padding(.top, 8)
+                    ArticleContentView(content: content)
                 }
                 
-                Divider()
-                    .padding(.horizontal)
-                
-                Button {
-                    viewModel.showAIActionSheet = true
-                } label: {
-                    HStack {
-                        Image(systemName: "sparkles")
-                        Text("AI Actions")
-                        Spacer()
-                        Image(systemName: "chevron.right")
+                // AI Actions
+                if viewModel.article.contentPreview?.isEmpty == false {
+                    AIActionCardView {
+                        viewModel.showAIActionSheet = true
                     }
-                    .padding()
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(12)
                 }
-
-                Divider()
-
+                
+                // Read Full Article
                 if let url = viewModel.article.url, let articleURL = URL(string: url) {
-                    NavigationLink {
-                        WebView(url: articleURL)
-                    } label: {
-                        Text("Read Full Article")
-                            .fontWeight(.semibold)
-                    }
+                    ReadFullArticleButton(url: articleURL)
                 }
             }
             .padding()
@@ -78,34 +47,28 @@ struct ArticleDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-
-                Button {
-                    shareArticle()
-                } label: {
+                Button { shareArticle() } label: {
                     Image(systemName: "square.and.arrow.up")
                 }
-
-                Button {
-                    toggleBookmark()
-                } label: {
+                Button { toggleBookmark() } label: {
                     Image(systemName: "bookmark")
                 }
             }
         }
         .sheet(isPresented: $viewModel.showAIActionSheet) {
-            AIActionSheet { action in
-                viewModel.selectedAIAction = action
-            }
+            AIActionsBottomSheet(onSelect: viewModel.selectAIAction(_:))
+                .presentationDetents([.medium])
         }
         .navigationDestination(item: $viewModel.selectedAIAction) { action in
-            AIResultView(article: viewModel.article, action: action)
+            AIResultView(viewModel: viewModel.makeAIResultViewModel())
         }
+
         .task {
             await viewModel.loadPreview()
         }
     }
     
-    func shareArticle() {
+    private func shareArticle() {
         guard let urlString = viewModel.article.url,
               let url = URL(string: urlString) else { return }
 
@@ -113,7 +76,6 @@ struct ArticleDetailView: View {
             activityItems: [viewModel.article.title, url],
             applicationActivities: nil
         )
-
         UIApplication.shared
             .connectedScenes
             .compactMap { ($0 as? UIWindowScene)?.keyWindow }
@@ -122,6 +84,29 @@ struct ArticleDetailView: View {
             .present(activity, animated: true)
     }
     
-    func toggleBookmark() {
+    private func toggleBookmark() {
+        // TODO: Implement
+    }
+}
+
+
+struct ArticleContentView: View {
+    let content: String
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(content)
+                .font(.body)
+                .lineSpacing(6)
+            
+            HStack(spacing: 4) {
+                Image(systemName: "sparkles")
+                    .font(.caption2)
+                    .foregroundColor(.cyan)
+                Text("Generated by BRU")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.horizontal)
     }
 }

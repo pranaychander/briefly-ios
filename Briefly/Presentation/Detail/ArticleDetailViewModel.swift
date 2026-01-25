@@ -22,14 +22,16 @@ final class ArticleDetailViewModel {
 
     // MARK: - Dependencies
 
-    private let generatePreviewUseCase: GenerateArticlePreviewUseCase
+    private let generateAIPreviewUseCase: GenerateAIArticlePreviewUseCase
+    private let aiContentFactory: AIResultViewModelFactory
 
     // MARK: - Init
 
-    init(article: Article, articleSource: ArticleSource, generatePreviewUseCase: GenerateArticlePreviewUseCase) {
+    init(article: Article, articleSource: ArticleSource, generateAIPreviewUseCase: GenerateAIArticlePreviewUseCase, aiContentFactory: AIResultViewModelFactory) {
         self.article = article
         self.source = articleSource
-        self.generatePreviewUseCase = generatePreviewUseCase
+        self.generateAIPreviewUseCase = generateAIPreviewUseCase
+        self.aiContentFactory = aiContentFactory
     }
 
     // MARK: - Actions
@@ -40,14 +42,21 @@ final class ArticleDetailViewModel {
         defer { isLoadingComments = false }
 
         do {
-            let article = try await generatePreviewUseCase.execute(
-                article: article
-            )
+            let article = try await generateAIPreviewUseCase.execute(article: article)
             self.article = article
 
         } catch {
             print("Preview generation failed: \(error)")
         }
+    }
+    
+    func selectAIAction(_ action: AIAction) {
+        showAIActionSheet = false
+        selectedAIAction = action
+    }
+    
+    func makeAIResultViewModel() -> AIResultViewModel {
+        return aiContentFactory.make(article: article, action: selectedAIAction ?? .summary)
     }
 }
 

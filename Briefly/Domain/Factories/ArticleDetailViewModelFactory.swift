@@ -12,16 +12,19 @@ protocol ArticleDetailViewModelFactory {
 }
 
 final class DefaultArticleDetailViewModelFactory: ArticleDetailViewModelFactory {
-
     private let sourceResolver: ArticleSourceResolver
-    private let generatePreviewUseCase: GenerateArticlePreviewUseCase
+    private let generateAIPreviewUseCase: GenerateAIArticlePreviewUseCase
+    private let aiContentFactory: AIResultViewModelFactory
 
     init(
         sourceResolver: ArticleSourceResolver,
-        generatePreviewUseCase: GenerateArticlePreviewUseCase
+        generateAIPreviewUseCase: GenerateAIArticlePreviewUseCase,
+        aiContentFactory: AIResultViewModelFactory
+        
     ) {
         self.sourceResolver = sourceResolver
-        self.generatePreviewUseCase = generatePreviewUseCase
+        self.generateAIPreviewUseCase = generateAIPreviewUseCase
+        self.aiContentFactory = aiContentFactory
     }
 
     func make(article: Article) -> ArticleDetailViewModel {
@@ -30,7 +33,8 @@ final class DefaultArticleDetailViewModelFactory: ArticleDetailViewModelFactory 
         return ArticleDetailViewModel(
             article: article,
             articleSource: source,
-            generatePreviewUseCase: generatePreviewUseCase
+            generateAIPreviewUseCase: generateAIPreviewUseCase,
+            aiContentFactory: aiContentFactory
         )
     }
 }

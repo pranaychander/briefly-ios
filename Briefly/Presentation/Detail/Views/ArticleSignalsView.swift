@@ -28,5 +28,6 @@ struct ArticleSignalsView: View {
                     .foregroundColor(.secondary)
             }
         }
+        .padding(.horizontal)
     }
 }

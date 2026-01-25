@@ -13,6 +13,12 @@ final class DependencyContainer {
     
     let apiClient = DefaultAPIClient()
     
+    // MARK: - Services
+    
+    lazy var aiService: AIService = {
+        return BRUAIService()
+    }()
+    
     lazy var hnSource = HackerNewsSource(apiClient: apiClient)
     lazy var redditSource = RedditSource(apiClient: apiClient)
     lazy var rssSource = RSSSource(apiClient: apiClient)
@@ -44,8 +50,13 @@ final class DependencyContainer {
     lazy var articleDetailFactory: ArticleDetailViewModelFactory = {
         DefaultArticleDetailViewModelFactory(
             sourceResolver: articleSourceResolver,
-            generatePreviewUseCase: generatePreviewUseCase
+            generateAIPreviewUseCase: generateAIPreviewUseCase,
+            aiContentFactory: aiResultsFactory
         )
+    }()
+    
+    lazy var aiResultsFactory: AIResultViewModelFactory = {
+        DefaultAIResultViewModelFactoryFactory(generateAIContentUseCase: generateAIContentUseCase)
     }()
     
     // MARK: - Providers
@@ -61,8 +72,12 @@ final class DependencyContainer {
         )
     }()
     
-    lazy var generatePreviewUseCase: GenerateArticlePreviewUseCase = {
-        DefaultGenerateArticlePreviewUseCase(sourceResolver: articleSourceResolver, summarizer: AIArticleSummarizer())
+    lazy var generateAIPreviewUseCase: GenerateAIArticlePreviewUseCase = {
+        DefaultAIGenerateArticlePreviewUseCase(sourceResolver: articleSourceResolver, service: aiService)
+    }()
+    
+    lazy var generateAIContentUseCase: GenerateAIContentUseCase = {
+        DefaultGenerateAIContentUseCase(service: aiService)
     }()
     
     // MARK: - ViewModels
