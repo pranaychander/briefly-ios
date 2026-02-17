@@ -15,17 +15,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="kgF-a2-lWI">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="kgF-a2-lWI">
+                                <rect key="frame" x="26" y="170" width="341.33333333333331" height="512"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="Jv3-eu-bsY"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="pRv-pa-wZa"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.2075195312" green="0.3850097656" blue="0.9194335938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="kgF-a2-lWI" secondAttribute="trailing" id="GAE-r7-paB"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="kgF-a2-lWI" secondAttribute="bottom" constant="-68" id="O3B-T3-1jj"/>
-                            <constraint firstItem="kgF-a2-lWI" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="-118" id="QXZ-Hq-DK6"/>
-                            <constraint firstItem="kgF-a2-lWI" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="qkz-Aj-O8p"/>
+                            <constraint firstItem="kgF-a2-lWI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="E1N-6n-v71"/>
+                            <constraint firstItem="kgF-a2-lWI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yBS-HW-azl"/>
                         </constraints>
                     </view>
                 </viewController>

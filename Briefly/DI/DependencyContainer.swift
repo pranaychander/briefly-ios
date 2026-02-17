@@ -37,6 +37,10 @@ final class DependencyContainer {
         )
     }()
     
+    lazy var marketRepository: MarketRepository = {
+        DefaultMarketRepository(client: apiClient, secrets: secrets)
+    }()
+    
     // MARK: - Resolvers
     lazy var articleSourceResolver: ArticleSourceResolver = {
         DefaultArticleSourceResolver(
@@ -64,6 +68,11 @@ final class DependencyContainer {
         userSettingsStore
     }()
     
+    // MARK: - Secrets
+    lazy var secrets: APISecrets = {
+        APISecrets(rapidAPIKey: Secrets.rapidAPIKey)
+    }()
+    
     // MARK: - Use Cases
     
     lazy var aggregateArticlesUseCase: AggregateArticlesUseCase = {
@@ -80,6 +89,10 @@ final class DependencyContainer {
         DefaultGenerateAIContentUseCase(service: aiService)
     }()
     
+    lazy var loadMarketOverviewUseCase: LoadMarketOverviewUseCase = {
+        DefaultLoadMarketOverviewUseCase(repository: marketRepository)
+    }()
+    
     // MARK: - ViewModels
     
     // lazy property for HomeViewModel
@@ -94,5 +107,10 @@ final class DependencyContainer {
     // lazy property for ProfileViewModel
     lazy var profileViewModel: ProfileViewModel = {
         ProfileViewModel()
+    }()
+    
+    // lazy property for MarketViewModel
+    lazy var marketViewModel: MarketViewModel = {
+        MarketViewModel(loadMarketOverview: DefaultLoadMarketOverviewUseCase(repository: marketRepository))
     }()
 }

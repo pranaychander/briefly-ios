@@ -12,3 +12,4 @@ HN_BASE_URL=hacker-news.firebaseio.com/v0
 REDDIT_BASE_URL=www.reddit.com
 RSS_TECH_FEED=feeds.bbci.co.uk/
 APP_ENV = debug
+RAPID_API_KEY = c471c814cfmshc50325044b137e7p1a9fbcjsn74d9c4620cf5

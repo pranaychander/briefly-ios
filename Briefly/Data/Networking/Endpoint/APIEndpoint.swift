@@ -12,9 +12,12 @@ protocol APIEndpoint {
     var path: String { get }
     var queryItems: [URLQueryItem] { get }
     var method: HTTPMethod { get }
+    var headers: [String: String] { get }
 }
 
 extension APIEndpoint {
+    var headers: [String: String] { [:] }
+
     func asURLRequest() throws -> URLRequest {
         var components = URLComponents(
             url: baseURL.appendingPathComponent(path),
@@ -31,6 +34,11 @@ extension APIEndpoint {
 
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+
+        headers.forEach {
+            request.setValue($1, forHTTPHeaderField: $0)
+        }
+
         return request
     }
 }

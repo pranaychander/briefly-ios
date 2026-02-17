@@ -14,23 +14,25 @@ struct BrieflyMainTabView: View {
     var body: some View {
         TabView(selection: $navigationState.selectedTab) {
             
-           Tab(BrieflyTab.home.title, systemImage: BrieflyTab.home.icon, value: .home) {
-                NavigationStack {
-                    HomeView(viewModel: container.homeViewModel)
-                }
-            }
-
-            Tab(BrieflyTab.discover.title, systemImage: BrieflyTab.discover.icon, value: .discover, role: .search) {
-                DiscoverView()
-                    .toolbarRole(.browser)
-            }
-
-            Tab(BrieflyTab.saved.title, systemImage: BrieflyTab.saved.icon, value: .saved) {
-                SavedView()
-            }
+//           Tab(BrieflyTab.home.title, systemImage: BrieflyTab.home.icon, value: .home) {
+//                NavigationStack {
+//                    HomeView(viewModel: container.homeViewModel)
+//                }
+//            }
+//
+//            Tab(BrieflyTab.discover.title, systemImage: BrieflyTab.discover.icon, value: .discover, role: .search) {
+//                DiscoverView()
+//                    .toolbarRole(.browser)
+//            }
+//
+//            Tab(BrieflyTab.saved.title, systemImage: BrieflyTab.saved.icon, value: .saved) {
+//                SavedView()
+//            }
             
             Tab(BrieflyTab.market.title, systemImage: BrieflyTab.market.icon, value: .market) {
-                MarketView()
+                NavigationStack {
+                    MarketView(viewModel: container.marketViewModel)
+                }
             }
 
             Tab(BrieflyTab.profile.title, systemImage: BrieflyTab.profile.icon, value: .profile) {
