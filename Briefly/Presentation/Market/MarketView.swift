@@ -11,6 +11,7 @@ import Charts
 struct MarketView: View {
 
     @State var viewModel: MarketViewModel
+    let loadMarketTrend: LoadMarketTrendUseCase
 
     var body: some View {
         ScrollView {
@@ -22,7 +23,12 @@ struct MarketView: View {
                 
                 IndicesRowView(indices: viewModel.indices)
 
-                MarketTrendChartView(data: viewModel.chartData)
+                MarketTrendScreen(
+                    viewModel: MarketTrendViewModel(
+                        points: viewModel.chartData,
+                        loadMarketTrend: loadMarketTrend
+                    )
+                )
 
                 MoversPickerView(
                     selection: $viewModel.selectedMoverType

@@ -92,6 +92,10 @@ final class DependencyContainer {
     lazy var loadMarketOverviewUseCase: LoadMarketOverviewUseCase = {
         DefaultLoadMarketOverviewUseCase(repository: marketRepository)
     }()
+
+    lazy var loadMarketTrendUseCase: LoadMarketTrendUseCase = {
+        DefaultLoadMarketTrendUseCase(repository: marketRepository)
+    }()
     
     // MARK: - ViewModels
     
@@ -111,6 +115,6 @@ final class DependencyContainer {
     
     // lazy property for MarketViewModel
     lazy var marketViewModel: MarketViewModel = {
-        MarketViewModel(loadMarketOverview: DefaultLoadMarketOverviewUseCase(repository: marketRepository))
+        MarketViewModel(loadMarketOverview: DefaultLoadMarketOverviewUseCase(repository: marketRepository), loadMarketTrend: loadMarketTrendUseCase)
     }()
 }

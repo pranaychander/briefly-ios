@@ -23,7 +23,7 @@ final class DefaultLoadMarketOverviewUseCase: LoadMarketOverviewUseCase {
         async let indices = repository.fetchIndices()
         async let gainers = repository.fetchTopGainers()
         async let losers = repository.fetchTopLosers()
-        async let chart = repository.fetchMarketTrend()
+        async let chart = repository.fetchMarketTrend(symbol: "^DJI", interval: .oneWeek, limit: MarketInterval.oneWeek.apiLimit, dividend: nil)
 
         return try await MarketOverview(
             indices: indices,

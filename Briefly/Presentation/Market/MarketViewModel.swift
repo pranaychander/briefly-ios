@@ -12,9 +12,11 @@ import Foundation
 final class MarketViewModel {
 
     private let loadMarketOverview: LoadMarketOverviewUseCase
+    let loadMarketTrend: LoadMarketTrendUseCase
 
-    init(loadMarketOverview: LoadMarketOverviewUseCase) {
+    init(loadMarketOverview: LoadMarketOverviewUseCase, loadMarketTrend: LoadMarketTrendUseCase) {
         self.loadMarketOverview = loadMarketOverview
+        self.loadMarketTrend = loadMarketTrend
     }
 
     var indices: [MarketIndex] = []

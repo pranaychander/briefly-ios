@@ -31,7 +31,10 @@ struct BrieflyMainTabView: View {
             
             Tab(BrieflyTab.market.title, systemImage: BrieflyTab.market.icon, value: .market) {
                 NavigationStack {
-                    MarketView(viewModel: container.marketViewModel)
+                    MarketView(
+                        viewModel: container.marketViewModel,
+                        loadMarketTrend: container.loadMarketTrendUseCase
+                    )
                 }
             }
 

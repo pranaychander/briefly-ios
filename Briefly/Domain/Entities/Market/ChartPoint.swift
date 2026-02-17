@@ -9,14 +9,6 @@ import Foundation
 
 struct ChartPoint: Identifiable {
     let id = UUID()
-    let time: Int
+    let time: Date
     let value: Double
 }
-
-let sampleChartData: [ChartPoint] = [
-    .init(time: 1, value: 100),
-    .init(time: 2, value: 102),
-    .init(time: 3, value: 98),
-    .init(time: 4, value: 105),
-    .init(time: 5, value: 110)
-]
